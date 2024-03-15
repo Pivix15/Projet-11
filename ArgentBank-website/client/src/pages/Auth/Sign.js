@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
+import { accountService } from '@/_services/account.service';
 
 const Sign = () => {
     let navigate = useNavigate()
@@ -26,7 +26,8 @@ const Sign = () => {
         axios.post('http://localhost:3001/api/v1/user/login', credentials)
         .then(res => {
             console.log(res)
-            navigate('/admin')
+            accountService.saveToken(res.data.body.token)
+            navigate('/admin/user/index')
         })
         .catch(error => console.log(error))
     }
@@ -48,12 +49,7 @@ const Sign = () => {
                     <div className="input-remember">
                         <input type="checkbox" id="remember-me" /><label for="remember-me">Remember me</label>
                     </div>
-                    {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
                     <button className="sign-in-button">Sign In</button>
-                    {/* <Link to='/admin/user/index' className="sign-in-button">Sign In</Link> */}
-                    {/* <!-- SHOULD BE THE BUTTON BELOW --> */}
-                    {/* <!-- <button className="sign-in-button">Sign In</button> --> */}
-                    {/* <!--  --> */}
                 </form>
             </section>
         </main>
