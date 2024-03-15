@@ -1,11 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const User = () => {
     return (
         <main className="main bg-dark">
             <div className="header">
                 <h1>Welcome back<br />Tony Jarvis!</h1>
-                <button className="edit-button">Edit Name</button>
+                <Link to='../edit'>
+                    <button className="edit-button">Edit Name</button>
+                </Link>
             </div>
             <h2 className="sr-only">Accounts</h2>
             <section className="account">
