@@ -1,26 +1,23 @@
 import '@/css/main.css';
 import '@/css/edituser.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from '@/pages/Home.js';
-import Sign from '@/pages/Sign.js';
-import User from '@/pages/User.js';
-import Layout from '@/pages/Layout.js';
-import EditUser from '@/pages/EditUser';
-import ArgentBank from './components/ArgentBank';
+import PublicRouter from '@/pages/Public/PublicRouter';
+import AdminRouter from '@/pages/Admin/AdminRouter';
+import Sign from '@/pages/Auth/Sign';
+import AuthGuard from '@/_helpers/AuthGuard';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path='/home' element={<Home />} />
-            <Route path='/sign' element={<Sign />} />
-            <Route path='/user' element={<User />} />
-            <Route path='/useredit' element={<EditUser />} />
-            <Route path='/argentbank' element={<ArgentBank />} />
-          </Route>
+          <Route path="/*" element={<PublicRouter />}/>
+          <Route path="/admin/*" element={
+            <AuthGuard>
+              <AdminRouter />
+            </AuthGuard>
+          }/>
+          <Route path="/auth/*" element={<Sign />}/> {/* un doute ! */}
         </Routes>
       </BrowserRouter>
     </div>
