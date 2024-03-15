@@ -1,12 +1,12 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import Header from '@/components/Header'
+import AHeader from '@/components/admin/AHeader'
 
 const ALayout = () => {
     return (
         <div className="ALayout">
-            <Header />
+            <AHeader />
             <Outlet />
         </div>
     );
