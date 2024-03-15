@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import axios from 'axios'
 
 
 const Sign = () => {
+    let navigate = useNavigate()
 
     const [credentials, setCredentials] = useState({
-        login: 'marcel',
-        password: 'roger'
+        email: 'tony@stark.com',
+        password: 'password123'
     })
 
     const onChange = (e) => {
@@ -17,9 +20,15 @@ const Sign = () => {
         })
     }
 
-    const onSubmite = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault()
         console.log(credentials)
+        axios.post('http://localhost:3001/api/v1/user/login', credentials)
+        .then(res => {
+            console.log(res)
+            navigate('/admin')
+        })
+        .catch(error => console.log(error))
     }
 
     return (
@@ -27,10 +36,10 @@ const Sign = () => {
             <section className="sign-in-content">
                 <i className="fa fa-user-circle sign-in-icon"></i> {/* Faut changer l'icon */}
                 <h1>Sign In</h1>
-                <form onSubmit={onSubmite}>
+                <form onSubmit={onSubmit}>
                     <div className="input-wrapper">
                         <label for="username">Username</label>
-                        <input type="text" id="username" name="username" value={credentials.username} onChange={onChange} />
+                        <input type="text" id="username" name="email" value={credentials.email} onChange={onChange} />
                     </div>
                     <div className="input-wrapper">
                         <label for="password">Password</label>
@@ -40,7 +49,8 @@ const Sign = () => {
                         <input type="checkbox" id="remember-me" /><label for="remember-me">Remember me</label>
                     </div>
                     {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-                    <Link to='/admin/user/index' className="sign-in-button">Sign In</Link>
+                    <button className="sign-in-button">Sign In</button>
+                    {/* <Link to='/admin/user/index' className="sign-in-button">Sign In</Link> */}
                     {/* <!-- SHOULD BE THE BUTTON BELOW --> */}
                     {/* <!-- <button className="sign-in-button">Sign In</button> --> */}
                     {/* <!--  --> */}
